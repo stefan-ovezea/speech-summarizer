@@ -14,16 +14,16 @@ from werkzeug.utils import secure_filename
 LANGUAGE = "english"
 ALLOWED_EXTENSIONS = {'mp3', 'mp4', 'wav'}
 UPLOAD_FOLDER = os.path.dirname(os.path.abspath('./uploads'))
-TEMPLATE_FOLDER = os.path.abspath('.')
+TEMPLATE_FOLDER = os.path.abspath('./speech-summarizer-app/dist/speech-summarizer-app/')
 
-app = Flask(__name__, template_folder=TEMPLATE_FOLDER)
+app = Flask(__name__, template_folder=TEMPLATE_FOLDER, static_folder=TEMPLATE_FOLDER, static_url_path="")
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config["DEBUG"] = True
 
 
 @app.route('/')
 def home():
-    return render_template('./index.html')
+    return render_template('index.html')
 
 
 @app.route('/summarize-audio', methods=['POST'])

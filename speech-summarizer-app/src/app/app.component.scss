@@ -1,0 +1,19 @@
+.summarize {
+  background: #fff;
+  border: 1px solid #ccc;
+  margin-top: 100px;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.ellipse {
+  position: absolute;
+  width: 616px;
+  height: 616px;
+  left: -559px;
+  top: 600px;
+  background: #5605D1;
+  opacity: .9;
+  filter: blur(244px);
+  z-index: -1;
+}

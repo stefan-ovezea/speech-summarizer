@@ -1,0 +1,16 @@
+@import "bootstrap/scss/bootstrap";
+
+body {
+  background: #100c34;
+}
+
+
+.btn {
+  &.btn-primary {
+    background: linear-gradient(to right, #5605D1, #F547BE);
+    border: 0;
+    font-size: 17px;
+    font-weight: bold;
+    padding: 0.6em 1.1em;
+  }
+}
