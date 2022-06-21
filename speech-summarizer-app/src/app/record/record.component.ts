@@ -24,7 +24,7 @@ export class RecordComponent implements OnInit {
     this.recordingService.stopRecording(this.mediaRecorder)
       .then((recording) => {
         const formData = new FormData();
-        formData.append('file', new File([recording], 'recording.wav'));
+        formData.append('file', recording, 'recording.wav');
         this.http.post('http://localhost:5000/summarize-audio', formData).subscribe(console.log);
       });
   }
