@@ -15,7 +15,7 @@ export class AppComponent {
   form = new FormGroup({
     file: new FormControl('', Validators.required),
     sentences: new FormControl(1),
-    areas: new FormControl(''),
+    algorithm: new FormControl('LsaSummarizer'),
   });
 
 

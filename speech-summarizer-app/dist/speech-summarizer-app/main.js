@@ -123,17 +123,27 @@ function AppComponent_form_8_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](10, "input", 22);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](11, "div", 21)(12, "label", 18);
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](13, "Areas of interest");
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](13, "Algorithm");
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](14, "input", 23);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](14, "select", 23)(15, "option", 24);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](16, "LsaSummarizer");
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](15, "button", 24);
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](16, "Summarize!");
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](17, "option", 25);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](18, "LexRankSummarizer");
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](19, "option", 26);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](20, "LuhnSummarizer");
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](21, "option", 27);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](22, "TextRankSummarizer");
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]()()();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](23, "button", 28);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](24, "Summarize!");
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]()();
 } if (rf & 2) {
     const ctx_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("formGroup", ctx_r2.form);
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](15);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](23);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("disabled", ctx_r2.form.invalid);
 } }
 class AppComponent {
@@ -145,7 +155,7 @@ class AppComponent {
         this.form = new _angular_forms__WEBPACK_IMPORTED_MODULE_2__.FormGroup({
             file: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__.FormControl('', _angular_forms__WEBPACK_IMPORTED_MODULE_2__.Validators.required),
             sentences: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__.FormControl(1),
-            areas: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__.FormControl(''),
+            algorithm: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__.FormControl('LsaSummarizer'),
         });
     }
     startRecognition() {
@@ -165,13 +175,13 @@ class AppComponent {
     }
 }
 AppComponent.ɵfac = function AppComponent_Factory(t) { return new (t || AppComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_speech_services_speech_service__WEBPACK_IMPORTED_MODULE_0__.SpeechService)); };
-AppComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 10, vars: 3, consts: [[1, "container"], [1, "row"], [1, "col-8", "offset-md-2"], [1, "summarize"], [1, "justify-content-center", "d-flex"], ["class", "recognition", 4, "ngIf"], ["class", "recognition-pending", 4, "ngIf"], [3, "formGroup", "ngSubmit", 4, "ngIf"], [1, "ellipse"], [1, "recognition"], ["class", "recognition-result", 4, "ngIf"], [1, "recognition-result"], [1, "alert", "alert-success"], [1, "alert", "alert-danger"], [1, "recognition-pending"], [1, "lds-hourglass"], [3, "formGroup", "ngSubmit"], [1, "form-group"], ["for", "exampleInputEmail1"], ["type", "file", "id", "exampleInputEmail1", 1, "form-control", 3, "change"], ["id", "emailHelp", 1, "form-text", "text-muted"], [1, "form-group", "mt-3"], ["type", "number", "value", "1", "formControlName", "sentences", 1, "form-control"], ["type", "text", "formControlName", "areas", 1, "form-control"], ["type", "submit", 1, "btn", "btn-primary", "mt-3", 3, "disabled"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
+AppComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 10, vars: 3, consts: [[1, "container"], [1, "row"], [1, "col-8", "offset-md-2"], [1, "summarize"], [1, "justify-content-center", "d-flex"], ["class", "recognition", 4, "ngIf"], ["class", "recognition-pending", 4, "ngIf"], [3, "formGroup", "ngSubmit", 4, "ngIf"], [1, "ellipse"], [1, "recognition"], ["class", "recognition-result", 4, "ngIf"], [1, "recognition-result"], [1, "alert", "alert-success"], [1, "alert", "alert-danger"], [1, "recognition-pending"], [1, "lds-hourglass"], [3, "formGroup", "ngSubmit"], [1, "form-group"], ["for", "exampleInputEmail1"], ["type", "file", "id", "exampleInputEmail1", 1, "form-control", 3, "change"], ["id", "emailHelp", 1, "form-text", "text-muted"], [1, "form-group", "mt-3"], ["type", "number", "value", "1", "formControlName", "sentences", 1, "form-control"], ["formControlName", "algorithm", 1, "form-select"], ["value", "LsaSummarizer"], ["value", "LexRankSummarizer"], ["value", "LuhnSummarizer"], ["value", "TextRankSummarizer"], ["type", "submit", 1, "btn", "btn-primary", "mt-3", 3, "disabled"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 0)(1, "div", 1)(2, "div", 2)(3, "div", 3)(4, "h1", 4);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](5, "Meeting Summarizer");
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](6, AppComponent_div_6_Template, 3, 2, "div", 5);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](7, AppComponent_div_7_Template, 3, 0, "div", 6);
-        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](8, AppComponent_form_8_Template, 17, 2, "form", 7);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](8, AppComponent_form_8_Template, 25, 2, "form", 7);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]()()()();
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](9, "div", 8);
     } if (rf & 2) {
@@ -181,7 +191,7 @@ AppComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_1__["�
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngIf", ctx.recognitionStatus === "PENDING");
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngIf", ctx.recognitionStatus !== "PENDING");
-    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_3__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_2__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_2__.NumberValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_2__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_2__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_2__.FormControlName], styles: [".summarize[_ngcontent-%COMP%] {\n  background: #fff;\n  border: 1px solid #ccc;\n  margin-top: 100px;\n  padding: 20px;\n  border-radius: 5px;\n}\n\n.ellipse[_ngcontent-%COMP%] {\n  position: absolute;\n  width: 616px;\n  height: 616px;\n  left: -559px;\n  top: 600px;\n  background: #5605D1;\n  opacity: 0.9;\n  filter: blur(244px);\n  z-index: -1;\n}\n\n.recognition-pending[_ngcontent-%COMP%] {\n  padding: 100px 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-direction: column;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGdCQUFBO0VBQ0Esc0JBQUE7RUFDQSxpQkFBQTtFQUNBLGFBQUE7RUFDQSxrQkFBQTtBQUNGOztBQUVBO0VBQ0Usa0JBQUE7RUFDQSxZQUFBO0VBQ0EsYUFBQTtFQUNBLFlBQUE7RUFDQSxVQUFBO0VBQ0EsbUJBQUE7RUFDQSxZQUFBO0VBQ0EsbUJBQUE7RUFDQSxXQUFBO0FBQ0Y7O0FBRUE7RUFDRSxnQkFBQTtFQUNBLGFBQUE7RUFDQSxtQkFBQTtFQUNBLHVCQUFBO0VBQ0Esc0JBQUE7QUFDRiIsImZpbGUiOiJhcHAuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuc3VtbWFyaXplIHtcbiAgYmFja2dyb3VuZDogI2ZmZjtcbiAgYm9yZGVyOiAxcHggc29saWQgI2NjYztcbiAgbWFyZ2luLXRvcDogMTAwcHg7XG4gIHBhZGRpbmc6IDIwcHg7XG4gIGJvcmRlci1yYWRpdXM6IDVweDtcbn1cblxuLmVsbGlwc2Uge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIHdpZHRoOiA2MTZweDtcbiAgaGVpZ2h0OiA2MTZweDtcbiAgbGVmdDogLTU1OXB4O1xuICB0b3A6IDYwMHB4O1xuICBiYWNrZ3JvdW5kOiAjNTYwNUQxO1xuICBvcGFjaXR5OiAuOTtcbiAgZmlsdGVyOiBibHVyKDI0NHB4KTtcbiAgei1pbmRleDogLTE7XG59XG5cbi5yZWNvZ25pdGlvbi1wZW5kaW5nIHtcbiAgcGFkZGluZzogMTAwcHggMDtcbiAgZGlzcGxheTogZmxleDtcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XG59XG4iXX0= */"] });
+    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_3__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_2__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_2__.NumberValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_2__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_2__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_2__.FormControlName, _angular_forms__WEBPACK_IMPORTED_MODULE_2__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_2__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["ɵNgSelectMultipleOption"]], styles: [".summarize[_ngcontent-%COMP%] {\n  background: #fff;\n  border: 1px solid #ccc;\n  margin-top: 100px;\n  padding: 20px;\n  border-radius: 5px;\n}\n\n.ellipse[_ngcontent-%COMP%] {\n  position: absolute;\n  width: 616px;\n  height: 616px;\n  left: -559px;\n  top: 600px;\n  background: #5605D1;\n  opacity: 0.9;\n  filter: blur(244px);\n  z-index: -1;\n}\n\n.recognition-pending[_ngcontent-%COMP%] {\n  padding: 100px 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-direction: column;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGdCQUFBO0VBQ0Esc0JBQUE7RUFDQSxpQkFBQTtFQUNBLGFBQUE7RUFDQSxrQkFBQTtBQUNGOztBQUVBO0VBQ0Usa0JBQUE7RUFDQSxZQUFBO0VBQ0EsYUFBQTtFQUNBLFlBQUE7RUFDQSxVQUFBO0VBQ0EsbUJBQUE7RUFDQSxZQUFBO0VBQ0EsbUJBQUE7RUFDQSxXQUFBO0FBQ0Y7O0FBRUE7RUFDRSxnQkFBQTtFQUNBLGFBQUE7RUFDQSxtQkFBQTtFQUNBLHVCQUFBO0VBQ0Esc0JBQUE7QUFDRiIsImZpbGUiOiJhcHAuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuc3VtbWFyaXplIHtcbiAgYmFja2dyb3VuZDogI2ZmZjtcbiAgYm9yZGVyOiAxcHggc29saWQgI2NjYztcbiAgbWFyZ2luLXRvcDogMTAwcHg7XG4gIHBhZGRpbmc6IDIwcHg7XG4gIGJvcmRlci1yYWRpdXM6IDVweDtcbn1cblxuLmVsbGlwc2Uge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIHdpZHRoOiA2MTZweDtcbiAgaGVpZ2h0OiA2MTZweDtcbiAgbGVmdDogLTU1OXB4O1xuICB0b3A6IDYwMHB4O1xuICBiYWNrZ3JvdW5kOiAjNTYwNUQxO1xuICBvcGFjaXR5OiAuOTtcbiAgZmlsdGVyOiBibHVyKDI0NHB4KTtcbiAgei1pbmRleDogLTE7XG59XG5cbi5yZWNvZ25pdGlvbi1wZW5kaW5nIHtcbiAgcGFkZGluZzogMTAwcHggMDtcbiAgZGlzcGxheTogZmxleDtcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XG59XG4iXX0= */"] });
 var RecognitionState;
 (function (RecognitionState) {
     RecognitionState["NOT_STARTED"] = "NOT_STARTED";
