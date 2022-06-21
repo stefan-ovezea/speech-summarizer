@@ -18,6 +18,7 @@ TEMPLATE_FOLDER = os.path.abspath('.')
 
 app = Flask(__name__, template_folder=TEMPLATE_FOLDER)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config["DEBUG"] = True
 
 
 @app.route('/')
@@ -62,13 +63,6 @@ def speech_to_text_sync(audio_file):
         print("Speech Recognition could not understand audio")
 
 
-def init_summarizer():
-    stemmer = Stemmer(LANGUAGE)
-    global summarizer
-    summarizer = Summarizer(stemmer)
-    stemmer.stop_words = get_stop_words(LANGUAGE)
-
-
 def summarize(doc, sentences_count=3):
     parser = PlaintextParser.from_string(doc, Tokenizer(LANGUAGE))
     summary = []
@@ -87,6 +81,13 @@ def error(message):
     return {
         'message': message
     }
+
+
+def init_summarizer():
+    stemmer = Stemmer(LANGUAGE)
+    global summarizer
+    stemmer.stop_words = get_stop_words(LANGUAGE)
+    summarizer = Summarizer(stemmer)
 
 
 if __name__ == '__main__':
