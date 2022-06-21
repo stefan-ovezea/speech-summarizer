@@ -69,7 +69,8 @@ def summarize(doc, sentences_count=3):
     for sentence in summarizer(parser.document, sentences_count):
         summary.append(sentence._text)
     return {
-        'summary': summary
+        'summary': summary,
+        'fullText': sentence._text
     }
 
 
