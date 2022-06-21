@@ -13,6 +13,8 @@ export class SpeechService {
   recognize(data: any): Observable<any> {
     const formData = new FormData();
     formData.append('file', data.file);
+    formData.append('algorithm', data.algorithm);
+    formData.append('sentences', data.sentences);
 
     return this.http.post('./summarize-audio', formData);
   }
