@@ -4,7 +4,33 @@
       <div class="summarize">
         <h1 class="justify-content-center d-flex">Meeting Summarizer</h1>
 
-        <form [formGroup]="form" (ngSubmit)="startRecognition()">
+        <div class="recognition" *ngIf="recognitionStatus === 'FAILED' || recognitionStatus === 'SUCCESS'">
+          <div class="recognition-result" *ngIf="recognitionStatus === 'SUCCESS'">
+            <div class="alert alert-success">
+              Recognition success!<br/>
+              <strong>{{recognizedFileName}}</strong> successfully parsed.
+            </div>
+            <h4>Meeting summary</h4>
+            <code>
+              {{recognitionSummary.join('\n')}}
+            </code>
+            <hr>
+          </div>
+          <div class="recognition-result" *ngIf="recognitionStatus === 'FAILED'">
+            <div class="alert alert-danger">
+              Recognition failed!<br/>
+              <strong>{{recognizedFileName}}</strong> not parsed.
+            </div>
+            <hr>
+          </div>
+        </div>
+
+        <div class="recognition-pending" *ngIf="recognitionStatus === 'PENDING'">
+          <div class="lds-hourglass"></div>
+          Please wait... Loading
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="startRecognition()" *ngIf="recognitionStatus !== 'PENDING'">
           <div class="form-group">
             <label for="exampleInputEmail1">Your file</label>
             <input type="file" class="form-control" id="exampleInputEmail1"

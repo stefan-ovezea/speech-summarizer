@@ -14,6 +14,6 @@ export class SpeechService {
     const formData = new FormData();
     formData.append('file', data.file);
 
-    return this.http.post('./summarize-audio', {});
+    return this.http.post('./summarize-audio', formData);
   }
 }

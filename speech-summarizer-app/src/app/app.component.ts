@@ -8,7 +8,9 @@ import {SpeechService} from "./speech/services/speech.service";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'speech-summarizer-app';
+  recognitionStatus: RecognitionState = RecognitionState.NOT_STARTED;
+  recognizedFileName: string = '';
+  recognitionSummary: Array<string> = [];
 
   form = new FormGroup({
     file: new FormControl('', Validators.required),
@@ -21,17 +23,27 @@ export class AppComponent {
   }
 
   startRecognition() {
-    console.log(this.form.value);
+    this.recognitionStatus = RecognitionState.PENDING;
     this.speechService.recognize(this.form.value).subscribe(data => {
-      console.log(data);
+      this.recognitionStatus = RecognitionState.SUCCESS;
+      this.recognitionSummary = data.summary;
+    }, () => {
+      this.recognitionStatus = RecognitionState.FAILED;
     })
 
   }
 
   onSelect(event: Event) {
+    this.recognitionStatus = RecognitionState.NOT_STARTED;
     const file = (event.target as any).files[0];
     this.form.patchValue({file: file});
-
-
+    this.recognizedFileName = file.name;
   }
+}
+
+enum RecognitionState {
+  NOT_STARTED = 'NOT_STARTED',
+  PENDING = 'PENDING',
+  FAILED = 'FAILED',
+  SUCCESS = 'SUCCESS',
 }
