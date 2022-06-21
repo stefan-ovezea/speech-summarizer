@@ -60,7 +60,7 @@ def speech_to_text_sync(audio_file):
         text = r.recognize_google(audio)
         return text
     except sr.UnknownValueError:
-        print("Speech Recognition could not understand audio")
+        raise "Speech Recognition could not understand audio"
 
 
 def summarize(doc, sentences_count=3):
