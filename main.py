@@ -2,6 +2,8 @@ import os
 from flask import Flask, request, render_template
 
 import speech_recognition as sr
+from pydub import AudioSegment
+from pydub.silence import split_on_silence
 
 from sumy.parsers.plaintext import PlaintextParser
 from sumy.nlp.tokenizers import Tokenizer
@@ -29,6 +31,7 @@ def home():
 @app.route('/summarize-audio', methods=['POST'])
 def summarize_audio():
     if request.method == 'POST':
+        print(request.form['algorithm'])
         if 'file' not in request.files:
             return error("File not found")
         file = request.files['file']
@@ -37,9 +40,9 @@ def summarize_audio():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            text = speech_to_text_sync(filename)
+            text = get_large_audio_transcription(filename)
             os.remove(filename)
-            return summarize(text)
+            return summarize(text, request.form['sentences'])
         else:
             return error('Allowed file types are mp3, mp4, wav')
 
@@ -61,6 +64,37 @@ def speech_to_text_sync(audio_file):
         return text
     except sr.UnknownValueError:
         print("Speech Recognition could not understand audio")
+
+
+def get_large_audio_transcription(path):
+    r = sr.Recognizer()
+
+    folder_name = path.replace(".wav", "")
+
+
+    sound = AudioSegment.from_wav(path)
+    chunks = split_on_silence(sound,
+                              min_silence_len=500,
+                              silence_thresh=sound.dBFS - 15,
+                              keep_silence=500,
+                              )
+    if not os.path.isdir(os.path.join("uploads", folder_name)):
+        os.mkdir(os.path.join("uploads", folder_name))
+    whole_text = ""
+    for i, audio_chunk in enumerate(chunks, start=1):
+        chunk_filename = os.path.join("uploads", folder_name, f"chunk{i}.wav")
+        audio_chunk.export(chunk_filename, format="wav")
+        with sr.AudioFile(chunk_filename) as source:
+            audio_listened = r.record(source)
+            try:
+                text = r.recognize_google(audio_listened)
+            except sr.UnknownValueError as e:
+                print("Error:", str(e))
+            else:
+                text = f"{text.capitalize()}. "
+                print(" -- :", text)
+                whole_text += text
+    return whole_text
 
 
 def summarize(doc, sentences_count=3):

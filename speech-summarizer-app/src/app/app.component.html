@@ -11,9 +11,7 @@
               <strong>{{recognizedFileName}}</strong> successfully parsed.
             </div>
             <h4>Meeting summary</h4>
-            <code>
-              {{recognitionSummary.join('\n')}}
-            </code>
+            <pre>{{recognitionSummary.join('\n\n\n')}}</pre>
             <hr>
           </div>
           <div class="recognition-result" *ngIf="recognitionStatus === 'FAILED'">
