@@ -7,7 +7,10 @@ from pydub.silence import split_on_silence
 
 from sumy.parsers.plaintext import PlaintextParser
 from sumy.nlp.tokenizers import Tokenizer
-from sumy.summarizers.lsa import LsaSummarizer as Summarizer
+from sumy.summarizers.lsa import LsaSummarizer
+from sumy.summarizers.lex_rank import LexRankSummarizer
+from sumy.summarizers.luhn import LuhnSummarizer
+from sumy.summarizers.text_rank import TextRankSummarizer
 from sumy.nlp.stemmers import Stemmer
 from sumy.utils import get_stop_words
 
@@ -42,7 +45,7 @@ def summarize_audio():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             text = get_large_audio_transcription(filename)
             os.remove(filename)
-            return summarize(text, request.form['sentences'])
+            return summarize(text, request.form['sentences'], request.form['algorithm'])
         else:
             return error('Allowed file types are mp3, mp4, wav')
 
@@ -95,11 +98,12 @@ def get_large_audio_transcription(path):
     folder_name = path.replace(".wav", "")
 
 
-    sound = AudioSegment.from_wav(path)
+    sound = AudioSegment.from_file(path)
+    sound.set_channels(1)
     chunks = split_on_silence(sound,
-                              min_silence_len=500,
-                              silence_thresh=sound.dBFS - 15,
-                              keep_silence=500,
+                              min_silence_len=700,
+                              silence_thresh=sound.dBFS - 20,
+                              keep_silence=400,
                               )
     if not os.path.isdir(os.path.join("uploads", folder_name)):
         os.mkdir(os.path.join("uploads", folder_name))
@@ -120,8 +124,12 @@ def get_large_audio_transcription(path):
     return whole_text
 
 
-def summarize(doc, sentences_count=3):
+def summarize(doc, sentences_count=3, algorithm='LsaSummarizer'):
+    stemmer = Stemmer(LANGUAGE)
+    stemmer.stop_words = get_stop_words(LANGUAGE)
+    summarizer = globals()[algorithm](stemmer)
     parser = PlaintextParser.from_string(doc, Tokenizer(LANGUAGE))
+
     summary = []
     for sentence in summarizer(parser.document, sentences_count):
         summary.append(sentence._text)
@@ -134,20 +142,28 @@ def summarize(doc, sentences_count=3):
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+def convert_to_wav(src, dst):
+    audio_file = src
+    filename, file_extension = os.path.splitext(audio_file)
+    converted_audio_file = audio_file
+
+    print(converted_audio_file)
+
+    # Convert to mono wav
+    converted_audio_file = filename + ".wav"
+    convert_to_wav(audio_file, converted_audio_file)
+    print("The audio file was converted from ", file_extension, " to wav.")
+
+    sound = AudioSegment.from_file(src)
+    sound = sound.set_channels(1)
+    sound.export(dst, format="wav")
+
+    return dst
 
 def error(message):
     return {
         'message': message
     }
 
-
-def init_summarizer():
-    stemmer = Stemmer(LANGUAGE)
-    global summarizer
-    stemmer.stop_words = get_stop_words(LANGUAGE)
-    summarizer = Summarizer(stemmer)
-
-
 if __name__ == '__main__':
-    init_summarizer()
     app.run()
