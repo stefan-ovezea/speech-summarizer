@@ -46,10 +46,10 @@ def summarize_audio():
         else:
             return error('Allowed file types are mp3, mp4, wav')
 
+
 @app.route('/summarize-recording', methods=['POST'])
 def summarize_recording():
     if request.method == 'POST':
-        print(request.form['algorithm'])
         if 'file' not in request.files:
             return error("File not found")
         file = request.files['file']
@@ -58,11 +58,17 @@ def summarize_recording():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            text = speech_to_text_sync(filename)
-            os.remove(filename)
-            return summarize(text, request.form['sentences'])
+            try:
+                text = speech_to_text_sync(filename)
+                os.remove(filename)
+                return summarize(text)
+            except:
+                os.remove(filename)
+                return error("Speech Recognition could not understand audio")
+
         else:
             return error('Allowed file types are mp3, mp4, wav')
+
 
 @app.route('/summarize-text', methods=['POST'])
 def summarize_text():
