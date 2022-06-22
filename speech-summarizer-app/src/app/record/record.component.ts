@@ -16,15 +16,15 @@ export class RecordComponent implements OnInit {
   }
 
   start() {
-    this.recordingService.record()
-      .then((mediaRecorder) => this.mediaRecorder = mediaRecorder);
+    this.recordingService.record().then();
   }
 
   stop() {
-    this.recordingService.stopRecording(this.mediaRecorder)
+    this.recordingService.stopRecording()
       .then((recording) => {
         const formData = new FormData();
         formData.append('file', recording, 'recording.wav');
+
         this.http.post('http://localhost:5000/summarize-audio', formData).subscribe(console.log);
       });
   }
