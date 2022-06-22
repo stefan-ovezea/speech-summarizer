@@ -7,7 +7,10 @@ from pydub.silence import split_on_silence
 
 from sumy.parsers.plaintext import PlaintextParser
 from sumy.nlp.tokenizers import Tokenizer
-from sumy.summarizers.lsa import LsaSummarizer as Summarizer
+from sumy.summarizers.lsa import LsaSummarizer
+from sumy.summarizers.lex_rank import LexRankSummarizer
+from sumy.summarizers.luhn import LuhnSummarizer
+from sumy.summarizers.text_rank import TextRankSummarizer
 from sumy.nlp.stemmers import Stemmer
 from sumy.utils import get_stop_words
 
@@ -42,7 +45,7 @@ def summarize_audio():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             text = get_large_audio_transcription(filename)
             os.remove(filename)
-            return summarize(text, request.form['sentences'])
+            return summarize(text, request.form['sentences'], request.form['algorithm'])
         else:
             return error('Allowed file types are mp3, mp4, wav')
 
@@ -74,9 +77,9 @@ def get_large_audio_transcription(path):
 
     sound = AudioSegment.from_wav(path)
     chunks = split_on_silence(sound,
-                              min_silence_len=500,
-                              silence_thresh=sound.dBFS - 15,
-                              keep_silence=500,
+                              min_silence_len=700,
+                              silence_thresh=sound.dBFS - 20,
+                              keep_silence=400,
                               )
     if not os.path.isdir(os.path.join("uploads", folder_name)):
         os.mkdir(os.path.join("uploads", folder_name))
@@ -97,8 +100,12 @@ def get_large_audio_transcription(path):
     return whole_text
 
 
-def summarize(doc, sentences_count=3):
+def summarize(doc, sentences_count=3, algorithm='LsaSummarizer'):
+    stemmer = Stemmer(LANGUAGE)
+    stemmer.stop_words = get_stop_words(LANGUAGE)
+    summarizer = globals()[algorithm](stemmer)
     parser = PlaintextParser.from_string(doc, Tokenizer(LANGUAGE))
+
     summary = []
     for sentence in summarizer(parser.document, sentences_count):
         summary.append(sentence._text)
@@ -117,14 +124,5 @@ def error(message):
         'message': message
     }
 
-
-def init_summarizer():
-    stemmer = Stemmer(LANGUAGE)
-    global summarizer
-    stemmer.stop_words = get_stop_words(LANGUAGE)
-    summarizer = Summarizer(stemmer)
-
-
 if __name__ == '__main__':
-    init_summarizer()
     app.run()
