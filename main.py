@@ -75,7 +75,8 @@ def get_large_audio_transcription(path):
     folder_name = path.replace(".wav", "")
 
 
-    sound = AudioSegment.from_wav(path)
+    sound = AudioSegment.from_file(path)
+    sound.set_channels(1)
     chunks = split_on_silence(sound,
                               min_silence_len=700,
                               silence_thresh=sound.dBFS - 20,
@@ -118,6 +119,23 @@ def summarize(doc, sentences_count=3, algorithm='LsaSummarizer'):
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+def convert_to_wav(src, dst):
+    audio_file = src
+    filename, file_extension = os.path.splitext(audio_file)
+    converted_audio_file = audio_file
+
+    print(converted_audio_file)
+
+    # Convert to mono wav
+    converted_audio_file = filename + ".wav"
+    convert_to_wav(audio_file, converted_audio_file)
+    print("The audio file was converted from ", file_extension, " to wav.")
+
+    sound = AudioSegment.from_file(src)
+    sound = sound.set_channels(1)
+    sound.export(dst, format="wav")
+
+    return dst
 
 def error(message):
     return {
