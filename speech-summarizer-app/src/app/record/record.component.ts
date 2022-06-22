@@ -7,13 +7,9 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './record.component.html',
   styleUrls: ['./record.component.scss']
 })
-export class RecordComponent implements OnInit {
-  mediaRecorder: MediaRecorder;
+export class RecordComponent {
 
   constructor(private http: HttpClient, private recordingService: RecordingService) { }
-
-  ngOnInit(): void {
-  }
 
   start() {
     this.recordingService.record().then();
@@ -24,7 +20,6 @@ export class RecordComponent implements OnInit {
       .then((recording) => {
         const formData = new FormData();
         formData.append('file', recording, 'recording.wav');
-
         this.http.post('http://localhost:5000/summarize-recording', formData).subscribe(console.log);
       });
   }

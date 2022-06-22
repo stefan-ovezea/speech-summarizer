@@ -6,10 +6,9 @@ import Recorder from 'recorderjs';
   providedIn: 'root'
 })
 export class RecordingService {
-  audioRecording: Blob;
   recorder: Recorder;
 
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
   record(): Promise<void> {
     return new Promise((resolve) => {
@@ -20,18 +19,6 @@ export class RecordingService {
           this.recorder = new Recorder(input);
           this.recorder.record();
           return resolve();
-          // const mediaRecorder = new MediaRecorder(stream);
-          // mediaRecorder.start();
-          // const audioChunks: Array<Blob> = [];
-          // mediaRecorder.addEventListener("dataavailable", (event) => {
-          //   audioChunks.push(event.data);
-          // });
-          //
-          // mediaRecorder.addEventListener("stop", () => {
-          //   this.audioRecording = new Blob(audioChunks);
-          //   console.log(this.audioRecording.type);
-          // })
-          // return resolve(mediaRecorder);
         });
     });
   }
@@ -43,9 +30,5 @@ export class RecordingService {
         return resolve(blob);
       });
     });
-    // mediaRecorder.stop();
-    // return new Promise((resolve) => {
-    //   return resolve(this.audioRecording);
-    // });
   }
 }

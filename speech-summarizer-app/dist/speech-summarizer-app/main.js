@@ -277,18 +277,15 @@ class RecordComponent {
         this.http = http;
         this.recordingService = recordingService;
     }
-    ngOnInit() {
-    }
     start() {
-        this.recordingService.record()
-            .then((mediaRecorder) => this.mediaRecorder = mediaRecorder);
+        this.recordingService.record().then();
     }
     stop() {
-        this.recordingService.stopRecording(this.mediaRecorder)
+        this.recordingService.stopRecording()
             .then((recording) => {
             const formData = new FormData();
             formData.append('file', recording, 'recording.wav');
-            this.http.post('http://localhost:5000/summarize-audio', formData).subscribe(console.log);
+            this.http.post('http://localhost:5000/summarize-recording', formData).subscribe(console.log);
         });
     }
 }
@@ -319,7 +316,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "RecordingService": () => (/* binding */ RecordingService)
 /* harmony export */ });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var recorderjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! recorderjs */ 8016);
+/* harmony import */ var recorderjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(recorderjs__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ 3184);
+
 
 class RecordingService {
     constructor() { }
@@ -327,29 +327,25 @@ class RecordingService {
         return new Promise((resolve) => {
             return navigator.mediaDevices.getUserMedia({ audio: true })
                 .then((stream) => {
-                const mediaRecorder = new MediaRecorder(stream);
-                mediaRecorder.start();
-                const audioChunks = [];
-                mediaRecorder.addEventListener("dataavailable", (event) => {
-                    audioChunks.push(event.data);
-                });
-                mediaRecorder.addEventListener("stop", () => {
-                    this.audioRecording = new Blob(audioChunks, { 'type': 'audio/wav' });
-                    console.log(this.audioRecording.type);
-                });
-                return resolve(mediaRecorder);
+                const audioContext = new AudioContext();
+                const input = audioContext.createMediaStreamSource(stream);
+                this.recorder = new (recorderjs__WEBPACK_IMPORTED_MODULE_0___default())(input);
+                this.recorder.record();
+                return resolve();
             });
         });
     }
-    stopRecording(mediaRecorder) {
-        mediaRecorder.stop();
+    stopRecording() {
+        this.recorder.stop();
         return new Promise((resolve) => {
-            return resolve(this.audioRecording);
+            this.recorder.exportWAV((blob) => {
+                return resolve(blob);
+            });
         });
     }
 }
 RecordingService.ɵfac = function RecordingService_Factory(t) { return new (t || RecordingService)(); };
-RecordingService.ɵprov = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: RecordingService, factory: RecordingService.ɵfac, providedIn: 'root' });
+RecordingService.ɵprov = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjectable"]({ token: RecordingService, factory: RecordingService.ɵfac, providedIn: 'root' });
 
 
 /***/ }),
