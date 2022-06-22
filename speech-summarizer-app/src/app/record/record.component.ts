@@ -20,7 +20,7 @@ export class RecordComponent {
       .then((recording) => {
         const formData = new FormData();
         formData.append('file', recording, 'recording.wav');
-        this.http.post('http://localhost:5000/summarize-recording', formData).subscribe(console.log);
+        this.http.post('/summarize-recording', formData).subscribe(console.log);
       });
   }
 

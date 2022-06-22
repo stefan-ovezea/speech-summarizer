@@ -4,6 +4,16 @@
     <div class="col-8 offset-md-2">
       <div class="summarize">
         <h1 class="justify-content-center d-flex">Meeting Summarizer</h1>
+        <div class="d-flex justify-content-center">
+          <div class="btn-group mb-4">
+            <a (click)="selectTab('audio')" class="btn"
+               [ngClass]="selectedTab === 'audio' ? 'btn-success' : 'btn-secondary'" aria-current="page">Use audio
+              file</a>
+            <a (click)="selectTab('recording')" class="btn"
+               [ngClass]="selectedTab === 'recording' ? 'btn-success' : 'btn-secondary'">Use live recording</a>
+          </div>
+        </div>
+
 
         <div class="recognition" *ngIf="recognitionStatus === 'FAILED' || recognitionStatus === 'SUCCESS'">
           <div class="recognition-result" *ngIf="recognitionStatus === 'SUCCESS'">
@@ -30,11 +40,18 @@
         </div>
 
         <form [formGroup]="form" (ngSubmit)="startRecognition()" *ngIf="recognitionStatus !== 'PENDING'">
-          <div class="form-group">
+          <div class="form-group" *ngIf="selectedTab === 'audio'">
             <label for="exampleInputEmail1">Your file</label>
             <input type="file" class="form-control" id="exampleInputEmail1"
                    (change)="onSelect($event)">
             <small id="emailHelp" class="form-text text-muted">.wav, .mp4</small>
+          </div>
+          <div class="form-group" *ngIf="selectedTab === 'recording'">
+            <button class="btn btn-success" type="button" (click)="start()" *ngIf="!recordingInProgress">Start
+              Recording
+            </button>
+            <button class="btn btn-danger" type="button" (click)="stop()" *ngIf="recordingInProgress">Stop Recording
+            </button>
           </div>
           <div class="form-group mt-3">
             <label for="exampleInputEmail1">Number of sentences</label>

@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validator, Validators} from "@angular/forms";
 import {SpeechService} from "./speech/services/speech.service";
+import {RecordingService} from "./record/recording.service";
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,10 @@ export class AppComponent {
   recognizedFileName: string = '';
   recognitionSummary: Array<string> = [];
 
+  recordingInProgress: boolean = false;
+
+  selectedTab: string = 'audio';
+
   form = new FormGroup({
     file: new FormControl('', Validators.required),
     sentences: new FormControl(1),
@@ -19,7 +24,7 @@ export class AppComponent {
   });
 
 
-  constructor(private speechService: SpeechService) {
+  constructor(private speechService: SpeechService, private recordingService: RecordingService) {
   }
 
   startRecognition() {
@@ -38,6 +43,25 @@ export class AppComponent {
     const file = (event.target as any).files[0];
     this.form.patchValue({file: file});
     this.recognizedFileName = file.name;
+  }
+
+  selectTab(name) {
+    this.selectedTab = name;
+  }
+
+
+  start() {
+    this.recordingService.record().then();
+    this.recordingInProgress = true;
+  }
+
+  stop() {
+    this.recordingInProgress = false;
+    this.recordingService.stopRecording()
+      .then((recording) => {
+        this.form.patchValue({file: new File([recording], "recording.wav")});
+        this.recognizedFileName = 'recording.wav';
+      });
   }
 }
 
